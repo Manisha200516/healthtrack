@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      text-align: center;
+      padding: 50px;
+    }
+
+    .card {
+      background-color: white;
+      margin: auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 400px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Your Health Results</h2>
+    <p id="bmi"></p>
+    <p id="water"></p>
+    <p id="suggestion"></p>
+
+    <a href="index.html">Go Back</a>
+  </div>
+
+  <script>
+  const stored = localStorage.getItem('results');
+  if (!stored) {
+    document.body.innerHTML = "<h3>No data found. Please go back and fill the form again.</h3>";
+  } else {
+    const data = JSON.parse(stored);
+
+    // Some backends send data.results, others just data
+    const res = data.results ? data.results : data;
+
+    document.getElementById('bmi').innerText =
+      "BMI: " + parseFloat(res.bmi).toFixed(2);
+    document.getElementById('water').innerText =
+      "Water Intake: " + res.water_liters + " liters/day";
+    document.getElementById('suggestion').innerText =
+      "Workout Suggestion: " + res.workout_suggestion;
+  }
+</script>
+
+</body>
+</html>

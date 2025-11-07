@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Tracker | FitTrack</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #c9e9e1, #d4f1f4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      padding: 30px;
+      width: 350px;
+      text-align: center;
+    }
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Enter Your Health Details</h2>
+    <form id="healthForm">
+      <input type="text" id="name" placeholder="Name" required><br>
+      <input type="number" id="age" placeholder="Age" required><br>
+      <select id="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select><br>
+      <input type="number" id="height" placeholder="Height (cm)" required><br>
+      <input type="number" id="weight" placeholder="Weight (kg)" required><br>
+      <button type="submit">Submit</button>
+    </form>
+    <br>
+<a href="workouts.html">Go to Workouts</a> |
+<a href="diet.html">View Diet Plan</a>
+
+  </div>
+
+  <script>
+    document.getElementById('healthForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        height_cm: document.getElementById('height').value,
+        weight_kg: document.getElementById('weight').value
+      };
+
+      const response = await fetch('/api/entry', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      localStorage.setItem('results', JSON.stringify(result));
+      window.location.href = 'results.html';
+    });
+  </script>
+</body>
+</html>
